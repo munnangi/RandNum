@@ -1,0 +1,48 @@
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Random Number</title>
+    <link rel="stylesheet" href={{ asset("css/randNum.css") }} >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+<form action="/numcheck" name="randgen" method="POST">
+    <div class="container">
+        <div >
+            I am thinking a number from 1 to 10.</br>
+            You must guess what is it in three tries.</br>
+            <div class="form-inline">
+              {% if count_guess == 3 %}
+                     {%  if num_input == randNum %}
+                         <div>You Won !</div>
+                     {% else %}
+                          <div>You are out of luck</div>
+                     {%  endif %}
+                {% elseif (num_input == randNum) and (num_input is defined) %}
+                    <div> Right! You have won the game!</div>
+                {% else %}
+                    <label for ="num_guess" class="enter-guess">Enter a guess</label><input id="num_guess" class="form-control" placeholder="Guess Number">
+                    <input type="submit" class="btn btn-default" value ="Guess">
+                  <div>{{ num_to_word }}</div>
+                            {%  if num_to_word is not empty %}
+                                <div>Your {{ num_to_word }} guess is : {{ num_input }}</div>
+                            {% endif %}
+                {% endif %}
+                <input type="hidden" id="countguess" value={{ count_guess }}>
+
+            </div>
+        </div>
+    </div>
+
+
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>

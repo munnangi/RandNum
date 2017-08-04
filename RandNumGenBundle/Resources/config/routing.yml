@@ -1,0 +1,6 @@
+rand_num_gen_homepage:
+    path:     /randnum/
+    defaults: { _controller: RandNumGenBundle:Default:index }
+#rand_check_num:
+#    path: /numcheck/
+#    defaults: { _controller: RandNumGenBundle:Default:checkNumber }

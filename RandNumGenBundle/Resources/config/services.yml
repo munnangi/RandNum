@@ -1,0 +1,5 @@
+services:
+    RandNumGenBundle\:
+        resource: '../../../RandNumGenBundle/*'
+        exclude: '../../../RandNumGenBundle/{Entity,Repository}'
+

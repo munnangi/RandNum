@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+
+{%  block body %}
+    {% block javascript %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous"></script>
+        <script src="{{ asset('js/randNumCheck.js') }}"></script>
+    {% endblock %}
+    {{ form_start(form) }}
+        <div>I am thinking a number from 1 to 10.</br>
+        You must guess what is it in three tries.</br>
+        </div>
+        {{ form_label(form.EnterGuess) }}
+        {{ form_widget(form.EnterGuess) }}
+
+        <input type="submit" value="Guess"  name="btnGuess" id="btnGuess"
+               class="btn btn-default pull-right" />
+        {{ form_widget(form.countguess, {attr: { value :  count_guess }}) }}
+    {# This is the logic to check the count of the guesses the user has and display information accordingly#}
+            {# set the hot, cold, warm based the number being away#}
+    {% set naway = (num_away == 1) ? '(hot)': (num_away == 2) ? '(warm)' : (num_away==3)?'(cold)':''  %}
+            {% if count_guess == 3 %}
+                {%  if num_input == randNum %}
+                    <div>Your {{ num_to_word }} guess is : {{ num_input }} <span>{{ naway }}</span></div>
+                    <div>You Won !</div>
+                    <input type="button" id ='start-again'  value="Start Again" />
+                    <script>checkValidate();</script>
+                {% else %}
+                    <div>Your {{ num_to_word }} guess is: {{ num_input }} <span>{{ naway }}</span></div>
+                    <div>You are out of luck</div>
+                    <input type="button"  id ='start-again1'  value="Start Again" />
+                    <script>checkValidate();</script>
+                {%  endif %}
+            {% elseif (num_input == randNum) and (num_input is not null) %}
+                    <div>Your {{ num_to_word }} guess is : {{ num_input }} <span>{{ naway }}</span></div>
+                    <div> Right! You have won the game!</div>
+                    <input type="button" id ='start-again2'  value="Start Again" />
+                    <script>checkValidate();</script>
+            {% elseif num_to_word is not empty %}
+                    <div>Your {{ num_to_word }} guess is : {{ num_input }} <span>{{ naway }}</span></div>
+            {% endif %}
+    {{ form_end(form) }}
+
+{% endblock %}
