@@ -20,27 +20,25 @@
         {{ form_widget(form.countguess, {attr: { value :  count_guess }}) }}
     {# This is the logic to check the count of the guesses the user has and display information accordingly#}
             {# set the hot, cold, warm based the number being away#}
-    {% set naway = (num_away == 1) ? '(hot)': (num_away == 2) ? '(warm)' : (num_away==3)?'(cold)':''  %}
-            {% if count_guess == 3 %}
+    {% set naway = (num_away == 1) ? '(hot)': (num_away == 2) ? '(warm)' : (num_away>2)?'(cold)':''  %}
+    {% if num_to_word is not empty %}
+        <div>Your {{ num_to_word }} guess is : {{ num_input }} <span>{{ naway }}</span></div>
+            {% if count_guess == 3  %}
                 {%  if num_input == randNum %}
-                    <div>Your {{ num_to_word }} guess is : {{ num_input }} <span>{{ naway }}</span></div>
                     <div>You Won !</div>
-                    <input type="button" id ='start-again'  value="Start Again" />
-                    <script>checkValidate();</script>
                 {% else %}
-                    <div>Your {{ num_to_word }} guess is: {{ num_input }} <span>{{ naway }}</span></div>
                     <div>You are out of luck</div>
-                    <input type="button"  id ='start-again1'  value="Start Again" />
-                    <script>checkValidate();</script>
                 {%  endif %}
+                <input type="button" id ='start-again'  value="Start Again" />
+                <script>checkValidate();</script>
             {% elseif (num_input == randNum) and (num_input is not null) %}
-                    <div>Your {{ num_to_word }} guess is : {{ num_input }} <span>{{ naway }}</span></div>
-                    <div> Right! You have won the game!</div>
-                    <input type="button" id ='start-again2'  value="Start Again" />
-                    <script>checkValidate();</script>
-            {% elseif num_to_word is not empty %}
-                    <div>Your {{ num_to_word }} guess is : {{ num_input }} <span>{{ naway }}</span></div>
+                <div> Right! You have won the game!</div>
+                <input type="button" id ='start-again2'  value="Start Again" />
+                <script>checkValidate();</script>
             {% endif %}
+    {% endif %}
+
+
     {{ form_end(form) }}
 
 {% endblock %}
